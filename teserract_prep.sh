@@ -2,7 +2,7 @@
 
 # File paths
 pdf_file="input/req.pdf"
-coordinates_file="input/coordinateS.txt"
+coordinates_file="input/coordinates.txt"
 output="intermediate/"
 
 # Read the coordinates from the text file
