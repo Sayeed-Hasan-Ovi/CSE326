@@ -5,6 +5,11 @@ pdf_file="input/test2.pdf"
 coordinates_file="input/coordinates.csv"
 output="intermediate/"
 
+# if the output directory does not exist, create it
+if [ ! -d "$output" ]; then
+    mkdir -p "$output"
+fi
+
 # Read the coordinates from the text file
 while IFS= read -r line; do
     # Split the line into coordinates
