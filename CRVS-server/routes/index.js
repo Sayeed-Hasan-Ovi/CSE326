@@ -5,9 +5,12 @@ var router = express.Router();
 const runScript = require('../helper/script_runner');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {  
+router.get('/', function(req, res, next) {
+  // build the shell equivalent command for the script
+  var command = './teserract_prep.sh';  
   // call the runScript function for testing
-  runScript('../../teserract_prep.sh', 'test2.pdf')
+  
+  runScript(command, 'test2.pdf')
     .then(() => console.log('finished running script'))
     .catch((err) => console.error(err));
   res.render('index', { title: 'CRVS form Uploader!' });

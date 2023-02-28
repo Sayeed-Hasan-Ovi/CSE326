@@ -1,29 +1,28 @@
-// import spawn from 'child_process' module
-const { spawn } = require('child_process');
+// import exec from 'child_process' module
+const { exec } = require('child_process');
 
 function runScript(scriptPath, arg) {
+  // return a promise
   return new Promise((resolve, reject) => {
-    // Create a new child process for running the script file
-    const child = spawn('node', [scriptPath, arg]);
+    // print the script path and argument
+    console.log('scriptPath: ' + scriptPath);
+    console.log('arg: ' + arg);
 
-    // Listen for stdout data from the child process
-    child.stdout.on('data', (data) => {
-      console.log(data.toString());
-    });
-
-    // Listen for stderr data from the child process
-    child.stderr.on('data', (data) => {
-      console.error(data.toString());
-    });
-
-    // Listen for the child process to exit
-    child.on('exit', (code) => {
-      if (code !== 0) {
-        reject(new Error(`Script ${scriptPath} exited with code ${code}`));
+    // execute the script
+    exec(scriptPath + ' ' + arg, (error, stdout, stderr) => {
+      if (error) {
+        // reject the promise if there is an error
+        reject(error);
+      } else if (stderr) {
+        // reject the promise if there is an error
+        reject(stderr);
       } else {
-        resolve();
+        console.log('stdout: ' + stdout);
+        // resolve the promise if the script runs successfully
+        resolve(stdout);
       }
     });
+
   });
 }
 
