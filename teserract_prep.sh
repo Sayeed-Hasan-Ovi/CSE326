@@ -1,7 +1,12 @@
 #!/bin/bash
 
-# File paths
-pdf_file="input/test2.pdf"
+# if the passed argument in not 2, print the usage
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <pdf_file>"
+    exit 1
+fi
+# File paths pdf/<pdf_file> input/coordinates.csv intermediate/
+pdf_file="pdf/$1"
 coordinates_file="input/coordinates.csv"
 output="intermediate/"
 
