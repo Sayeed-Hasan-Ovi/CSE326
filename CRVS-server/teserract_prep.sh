@@ -20,7 +20,7 @@ while IFS= read -r line; do
     # Split the line into coordinates
     IFS=',' read -ra coord <<< "$line"
     # if the line does not have 7 elements, skip it
-    if [ ${#coord[@]} -ne 7 ]; then
+    if [ ${#coord[@]} -ne 8 ]; then
         echo "Skipping line: $line"
         flag=1
         continue
@@ -34,10 +34,18 @@ while IFS= read -r line; do
         y2=${coord[3]}
         page_num=${coord[4]}
         field_name=${coord[5]}
-        field_type=${coord[6]}
+        index=${coord[6]}
+        field_type=${coord[7]}
         echo "Processing field: $field_name"
+
+        #concat field name with index
+        if [[ $field_type == "OCR_WORD" ]]; then
+            image_name="$field_name"
+        else 
+            image_name="$field_name$index"
+        fi
         
         # Call the Python script to crop the image
-        python3 pdf_to_img.py "$pdf_file" "$output" "$x1" "$y1" "$x2" "$y2" "$page_num" "$field_name"
+        python3 pdf_to_img.py "$pdf_file" "$output" "$x1" "$y1" "$x2" "$y2" "$page_num" "$image_name"
     fi
 done < "$coordinates_file"
