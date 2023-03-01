@@ -11,7 +11,11 @@ coordinates_file="input/coordinates.csv"
 output="intermediate/"
 
 # if the output directory does not exist, create it
+# else delete the contents of the directory and create it
 if [ ! -d "$output" ]; then
+    mkdir -p "$output"
+else
+    rm -r $output
     mkdir -p "$output"
 fi
 flag=0
@@ -41,8 +45,15 @@ while IFS= read -r line; do
         #concat field name with index
         if [[ $field_type == "OCR_WORD" ]]; then
             image_name="$field_name"
+            output="intermediate/"
         else 
             image_name="$field_name$index"
+            # concatenate the output directory with the field name
+            output="intermediate/$field_name/"
+            # if the output directory does not exist, create it
+            if [ ! -d "$output" ]; then
+                mkdir -p "$output"
+            fi
         fi
         
         # Call the Python script to crop the image

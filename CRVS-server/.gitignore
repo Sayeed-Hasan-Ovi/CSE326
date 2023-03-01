@@ -1,5 +1,6 @@
 # the intermediate build images
 /intermediate
+/pdf
 
 
 # Logs
